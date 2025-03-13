@@ -34,6 +34,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose }) => {
         enqueueSnackbar("Signup failed. Please try again.", { variant: "error" });
       }
     } catch (error) {
+      console.log(error);
       enqueueSnackbar("An error occurred during signup. Please try again later.", { variant: "error" });
     }
   };

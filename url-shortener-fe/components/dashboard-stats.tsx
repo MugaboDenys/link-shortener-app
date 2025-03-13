@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, JSX } from "react"
 import { BarChart, LineChart, ArrowUpRight, ArrowDownRight, Users, Globe } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface DashboardStatsProps {
@@ -116,13 +116,13 @@ export default function DashboardStats({ totalClicks = 0, totalLinks = 0 }: Dash
   )
 }
 
-function StatsCard({ title, value, change, icon, color }) {
+function StatsCard({ title, value, change, icon, color }: { title: string; value: string; change: number; icon: JSX.Element; color: 'blue' | 'purple' | 'orange' | 'green' }) {
   const colorClasses = {
     blue: "bg-blue-50 text-blue-600",
     purple: "bg-purple-50 text-purple-600",
     orange: "bg-orange-50 text-orange-600",
     green: "bg-green-50 text-green-600",
-  }
+  };
 
   return (
     <Card>

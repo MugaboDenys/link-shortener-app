@@ -1,0 +1,42 @@
+
+services:
+  backend-sp:
+    build: ./url-shortener-be
+    container_name: url-shortener-be
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://database:5432/postgres  
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+      - JWT_SECRET="y4vHdPqfJ3v9Xw4GsHth8XMBbLWk7Pg1p1Rb9Z9Yc9o="
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: .
+      dockerfile: url-shortener-fe/Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - url-shortener-fe/.env.local  # Corrected list format for environment file
+    depends_on:
+      - backend-sp
+
+  database:
+    image: postgres:15
+    container_name: url-shortener-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
