@@ -1,0 +1,6 @@
+url-shortener-fe/node_modules/
+url-shortener-fe/.next/
+url-shortener-fe/out/
+url-shortener-fe/.idea/
+url-shortener-fe/.vscode/
+.DS_Store
