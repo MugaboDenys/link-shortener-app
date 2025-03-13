@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Copy } from "lucide-react"
 
 export default function CreateLinkForm() {
@@ -17,7 +15,7 @@ export default function CreateLinkForm() {
   const [isCreated, setIsCreated] = useState(false)
   const [shortUrl, setShortUrl] = useState("")
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const token = localStorage.getItem("authToken")

@@ -1,6 +1,6 @@
 "use client"
 import { Suspense, useEffect, useState } from "react"
-import { Search } from "lucide-react"
+import { Link, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,15 +9,31 @@ import LinkTable from "@/components/link-table"
 import CreateLinkForm from "@/components/create-link-form"
 import DashboardStats from "@/components/dashboard-stats"
 import LoadingSpinner from "@/components/loading-spinner"
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import {  useSnackbar } from 'notistack';
 import { useRouter } from 'next/navigation';
+
+interface Link {
+  id: string;
+  longUrl: string;
+  shortCode: string;
+  clicks: number;
+  createdAt: string;
+}
+
+interface FormattedLink {
+  id: string;
+  originalUrl: string;
+  shortUrl: string;
+  clicks: number;
+  createdAt: string;
+}
 
 export default function Dashboard() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar(); 
   const [totalClicks, setTotalClicks] = useState(0);
   const [totalLinks, setTotalLinks] = useState(0);
-  const [links, setLinks] = useState([]);
+  const [links, setLinks] = useState<FormattedLink[]>([]);
   const [username, setUsername] = useState("John Smith");
   const router = useRouter();
 
@@ -35,7 +51,7 @@ export default function Dashboard() {
     }
   }, [router, enqueueSnackbar]);
 
-  const fetchLinks = async (token) => {
+  const fetchLinks = async (token: string) => {
     try {
       const response = await fetch("http://localhost:8080/api/urls", {
         headers: {
@@ -43,8 +59,8 @@ export default function Dashboard() {
           "Content-Type": "application/json"
         }
       });
-      const data = await response.json();
-      const formattedLinks = data.map(link => ({
+      const data: Link[] = await response.json();
+      const formattedLinks: FormattedLink[] = data.map((link: Link) => ({
         id: link.id,
         originalUrl: link.longUrl,
         shortUrl: `localhost:8080/api/${link.shortCode}`,
@@ -60,6 +76,7 @@ export default function Dashboard() {
       setTotalClicks(totalClicks);
       setTotalLinks(totalLinks);
     } catch (error) {
+      console.log(error);
       enqueueSnackbar("Error fetching links.", { variant: "error" });
     }
   };
@@ -96,6 +113,7 @@ export default function Dashboard() {
         enqueueSnackbar("Logout failed. Please try again.", { variant: "error" });
       }
     } catch (error) {
+      console.error(error);
       enqueueSnackbar("An error occurred during logout. Please try again later.", { variant: "error" });
     }
   };

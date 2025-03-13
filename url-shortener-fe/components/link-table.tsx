@@ -34,18 +34,18 @@ export default function LinkTable({ links, onTotalClicksChange }: LinkTableProps
       link.shortUrl.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text:string) => {
     navigator.clipboard.writeText(text)
     // You could add a toast notification here
   }
 
-  const handleLinkClick = (shortUrl) => {
+  const handleLinkClick = (shortUrl:string) => {
     const fullUrl = `http://${shortUrl}`;
     window.open(fullUrl, "_blank"); 
 };
 
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString:string) => {
     const date = new Date(dateString)
     return new Intl.DateTimeFormat("en-US", {
       month: "short",

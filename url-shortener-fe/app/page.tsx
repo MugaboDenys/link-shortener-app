@@ -55,6 +55,7 @@ function LandingPage() {
         }
       }
     } catch (error) {
+      console.log(error);
       enqueueSnackbar("An error occurred during login. Please try again later.", { variant: "error" });
     }
   };
@@ -100,7 +101,7 @@ function LandingPage() {
                 </Button>
               </form>
               <Link onClick={toggleSignup} href="#">
-                <p className="text-blue-600 text-sm mt-10 hover:underline">Don't have an account? Sign up</p>
+                <p className="text-blue-600 text-sm mt-10 hover:underline">Don&apos;t have an account? Sign up</p>
               </Link>
               <Button
                 type="button"
